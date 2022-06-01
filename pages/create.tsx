@@ -1,6 +1,7 @@
 import Input from "@components/input";
 import Layout from "@components/layout";
 import { cls } from "@libs/client/utils";
+import Link from "next/link";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -99,10 +100,21 @@ function Create() {
           </div>
           <p className="mt-12 w-full text-center text-sm font-medium">
             회원으로 가입하면{" "}
-            <span className="cursor-pointer text-[#F2B71F]">서비스 약관</span>과{" "}
-            <span className="cursor-pointer text-[#F2B71F]">
+            <a
+              href="/policies/conditions"
+              target={"_blank"}
+              className="cursor-pointer text-[#F2B71F]"
+            >
+              서비스 약관
+            </a>
+            과{" "}
+            <a
+              href="/policies/privacy"
+              target={"_blank"}
+              className="cursor-pointer text-[#F2B71F]"
+            >
               개인정보 처리방침
-            </span>
+            </a>
             을 읽고 이해한 것으로 간주됩니다.
           </p>
           <button className="mt-12 w-full rounded-lg bg-[#FF8A8A] py-3 font-semibold text-white shadow-sm">
