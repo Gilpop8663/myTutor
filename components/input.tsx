@@ -3,7 +3,7 @@ import type { UseFormRegisterReturn } from "react-hook-form";
 interface InputProps {
   label: string;
   name: string;
-  kind?: "text" | "phone" | "price";
+  kind?: "text" | "phone" | "name";
   type: string;
   register?: UseFormRegisterReturn;
   placeholder?: string;
@@ -15,60 +15,59 @@ export default function Input({
   name,
   kind = "text",
   register,
-  type,
-  required,
+  type = "text",
+  required = false,
   placeholder,
 }: InputProps) {
   return (
-    <div>
+    <div className="mt-4">
       <label
-        className="mb-1 block text-sm font-medium text-gray-700"
+        className="mb-2 flex items-center text-sm font-medium text-gray-700"
         htmlFor={name}
       >
         {label}
+        {kind === "name" ? (
+          <div className="ml-2 cursor-pointer rounded-lg bg-[#B0FAB7] px-2 py-1 text-xs">
+            중복확인
+          </div>
+        ) : null}
       </label>
       {kind === "text" ? (
-        <div className="relative flex items-center  rounded-md shadow-sm">
+        <div>
           <input
+            {...register}
             id={name}
             required={required}
-            {...register}
             type={type}
             placeholder={placeholder}
-            className="w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500"
+            className="h-10 w-full rounded-md border-0 bg-[#DCF0E9] pl-4 focus:ring-[#4f5653]"
           />
-        </div>
-      ) : null}
-      {kind === "price" ? (
-        <div className="relative flex items-center  rounded-md shadow-sm">
-          <div className="pointer-events-none absolute left-0 flex items-center justify-center pl-3">
-            <span className="text-sm text-gray-500">$</span>
-          </div>
-          <input
-            id={name}
-            required={required}
-            {...register}
-            type={type}
-            placeholder={placeholder}
-            className="w-full appearance-none rounded-md border border-gray-300 px-3 py-2 pl-7 placeholder-gray-400 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500"
-          />
-          <div className="pointer-events-none absolute right-0 flex items-center pr-3">
-            <span className="text-gray-500">KRW</span>
-          </div>
         </div>
       ) : null}
       {kind === "phone" ? (
-        <div className="flex rounded-md shadow-sm">
-          <span className="flex select-none items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">
-            +82
-          </span>
+        <div className="relative flex items-center">
           <input
+            {...register}
             id={name}
             required={required}
-            {...register}
             type={type}
             placeholder={placeholder}
-            className="w-full appearance-none rounded-md rounded-l-none border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500"
+            className="h-10 w-full rounded-md border-0 bg-[#DCF0E9] pl-4 focus:ring-[#4f5653]"
+          />
+          <div className="absolute right-2 flex cursor-pointer items-center justify-center rounded-lg bg-[#C6A6A6] py-1.5 px-2 text-xs">
+            인증번호 전송
+          </div>
+        </div>
+      ) : null}
+      {kind === "name" ? (
+        <div>
+          <input
+            {...register}
+            id={name}
+            required={required}
+            type={type}
+            placeholder={placeholder}
+            className="h-10 w-full rounded-md border-0 bg-[#DCF0E9] pl-4 focus:ring-[#4f5653]"
           />
         </div>
       ) : null}

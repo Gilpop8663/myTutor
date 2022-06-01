@@ -6,6 +6,7 @@ import Input from "@components/input";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
 import Layout from "@components/layout";
+import Link from "next/link";
 
 interface EnterForm {
   email?: string;
@@ -54,6 +55,22 @@ const Enter: NextPage = () => {
           <div className="absolute mx-auto bg-white p-4 text-lg font-semibold">
             또는
           </div>
+        </div>
+        <div className="mt-20 flex w-full cursor-pointer items-center justify-center rounded-full border border-black p-4 text-lg font-semibold shadow-sm">
+          구글로 로그인하기
+        </div>
+        <div className="mt-8 flex w-full cursor-pointer items-center justify-center rounded-full border border-black p-4 text-lg font-semibold shadow-sm">
+          카카오로 로그인하기
+        </div>
+        <div className="mt-20 flex justify-center">
+          <span className="text-lg font-medium text-black/50">
+            계정이 없으신가요?
+          </span>
+          <Link href="/create">
+            <a className="ml-6 cursor-pointer text-lg font-semibold text-blue-500">
+              가입하기
+            </a>
+          </Link>
         </div>
       </div>
     </Layout>
