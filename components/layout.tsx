@@ -5,15 +5,15 @@ import { useRouter } from "next/router";
 
 interface LayoutProps {
   title?: string;
-  canGoBack?: boolean;
+  large?: boolean;
   hasTabBar?: boolean;
   children: React.ReactNode;
 }
 
 export default function Layout({
   title,
-  canGoBack,
   hasTabBar,
+  large = false,
   children,
 }: LayoutProps) {
   const router = useRouter();
@@ -26,7 +26,12 @@ export default function Layout({
   };
   return (
     <div className="">
-      <div className="fixed top-0 flex h-12 w-full max-w-2xl select-none items-center justify-center border-b bg-white  px-10 text-lg font-medium text-gray-800  md:h-24">
+      <div
+        className={cls(
+          large ? "" : "border-b",
+          "fixed top-0 flex h-12 w-full max-w-2xl select-none items-center justify-center bg-white px-10  text-lg  font-medium text-gray-800  md:h-24"
+        )}
+      >
         <svg
           onClick={onOpenClick}
           xmlns="http://www.w3.org/2000/svg"
@@ -46,8 +51,8 @@ export default function Layout({
           <Link href="/">
             <a
               className={cls(
-                canGoBack ? "mx-auto" : "",
-                "text-lg font-semibold md:text-2xl"
+                large ? "text-base" : "text-lg",
+                "font-semibold md:text-2xl"
               )}
             >
               {title}
@@ -56,9 +61,11 @@ export default function Layout({
         ) : null}
       </div>
       <div className="w-66 fixed right-10 hidden h-24 max-w-2xl cursor-pointer select-none items-center justify-between text-base font-semibold md:flex">
-        {/* <div className="mx-3 transition-colors hover:text-red-500">
-          마이페이지
-        </div> */}
+        <Link href="/profile">
+          <a className="mx-3 transition-colors hover:text-red-500">
+            마이페이지
+          </a>
+        </Link>
         <Link href="/enter">
           <a className="mx-3 transition-colors hover:text-red-500">로그인</a>
         </Link>
@@ -105,7 +112,12 @@ export default function Layout({
             </a>
           </Link>
         </div>
-        {/* <div>마이페이지</div> */}
+
+        <Link href="/profile">
+          <a className="mt-8 flex cursor-pointer justify-center border-t border-black/50 pt-8 text-lg font-semibold  text-black transition-colors hover:text-red-300">
+            마이 페이지
+          </a>
+        </Link>
       </div>
       <div className={cls("pt-12 md:pt-24", hasTabBar ? "pb-24" : "")}>
         {children}

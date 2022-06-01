@@ -1,6 +1,7 @@
 import Input from "@components/input";
 import Layout from "@components/layout";
-import React from "react";
+import { cls } from "@libs/client/utils";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface CreateForm {
@@ -11,12 +12,21 @@ interface CreateForm {
   phone: number;
 }
 
-export default function create() {
+function Create() {
   const { register, handleSubmit } = useForm<CreateForm>();
+  const [image, setImage] = useState("first");
+  const onImageClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // console.log(e.currentTarget.name);
+    e.preventDefault();
+    setImage(e.currentTarget.name);
+  };
+  const onValid = () => {
+    console.log("hi");
+  };
   return (
     <Layout title="My Tutor">
       <div className="px-4">
-        <form action="" className="mt-16">
+        <form action="" onSubmit={handleSubmit(onValid)} className="mt-16">
           <Input
             label="닉네임"
             name="name"
@@ -57,6 +67,36 @@ export default function create() {
             register={register("phone", { required: true })}
             kind="phone"
           />
+
+          <h3 className="pt-8 text-sm font-medium">
+            사용할 프로필 이미지를 골라주세요
+          </h3>
+          <div className="flex items-center justify-between py-8 px-4">
+            <button
+              onClick={onImageClick}
+              className={cls(
+                image === "first" ? "ring-2 ring-blue-500" : "",
+                "h-24 w-24 rounded-full bg-red-500"
+              )}
+              name="first"
+            />
+            <button
+              onClick={onImageClick}
+              className={cls(
+                image === "second" ? "ring-2 ring-blue-500" : "",
+                "h-24 w-24 rounded-full bg-red-500"
+              )}
+              name="second"
+            />
+            <button
+              onClick={onImageClick}
+              className={cls(
+                image === "third" ? "ring-2 ring-blue-500" : "",
+                "h-24 w-24 rounded-full bg-red-500"
+              )}
+              name="third"
+            />
+          </div>
           <p className="mt-12 w-full text-center text-sm font-medium">
             회원으로 가입하면{" "}
             <span className="cursor-pointer text-[#F2B71F]">서비스 약관</span>과{" "}
@@ -73,3 +113,5 @@ export default function create() {
     </Layout>
   );
 }
+
+export default Create;
