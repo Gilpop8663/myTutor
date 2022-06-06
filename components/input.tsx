@@ -1,3 +1,4 @@
+import React from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 
 interface InputProps {
@@ -8,6 +9,7 @@ interface InputProps {
   register?: UseFormRegisterReturn;
   placeholder?: string;
   required: boolean;
+  onClick?: () => void;
 }
 
 export default function Input({
@@ -18,6 +20,7 @@ export default function Input({
   type = "text",
   required = false,
   placeholder,
+  onClick,
 }: InputProps) {
   return (
     <div className="mt-4">
@@ -27,7 +30,10 @@ export default function Input({
       >
         {label}
         {kind === "name" ? (
-          <div className="ml-2 cursor-pointer rounded-lg bg-[#B0FAB7] px-2 py-1 text-xs">
+          <div
+            onClick={onClick}
+            className="ml-2 cursor-pointer rounded-lg bg-[#B0FAB7] px-2 py-1 text-xs"
+          >
             중복확인
           </div>
         ) : null}
@@ -54,7 +60,10 @@ export default function Input({
             placeholder={placeholder}
             className="h-10 w-full rounded-md border-0 bg-[#DCF0E9] pl-4 focus:ring-[#4f5653]"
           />
-          <div className="absolute right-2 flex cursor-pointer items-center justify-center rounded-lg bg-[#C6A6A6] py-1.5 px-2 text-xs">
+          <div
+            className="absolute right-2 flex cursor-pointer items-center justify-center rounded-lg bg-[#C6A6A6] py-1.5 px-2 text-xs"
+            onClick={onClick}
+          >
             인증번호 전송
           </div>
         </div>
