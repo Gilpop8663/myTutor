@@ -8,7 +8,7 @@ function Lecture() {
     setCategory(e.currentTarget.name);
   };
   return (
-    <Layout title="강의 리스트" large>
+    <Layout title="강의 리스트" large canGoBack>
       <div className="mt-4 grid grid-cols-2">
         <button
           className={cls(
@@ -31,7 +31,7 @@ function Lecture() {
           완료한 수업
         </button>
       </div>
-      {category === "ing" ? (
+      {/* {category === "ing" ? (
         <div>
           <div className="flex px-4 py-4">
             <div className="h-28 w-28 rounded-lg bg-red-500 shadow-sm"></div>
@@ -69,7 +69,7 @@ function Lecture() {
             수업 노트 복습하기
           </div>
         </div>
-      ) : null}
+      ) : null} */}
     </Layout>
   );
 }

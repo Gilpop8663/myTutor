@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import firstPick from "../img/first.jpg";
 import secondPick from "../img/second.jpg";
 import thirdPick from "../img/third.jpg";
+import Head from "next/head";
 
 interface CreateForm {
   nickname: string;
@@ -96,6 +97,9 @@ function Create() {
 
   return (
     <Layout title="My Tutor">
+      <Head>
+        <title>마이튜터 - 회원가입</title>
+      </Head>
       <div className="px-4">
         <form action="" onSubmit={handleSubmit(onValid)} className="mt-16">
           <Input

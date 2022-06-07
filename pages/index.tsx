@@ -5,18 +5,28 @@ import Link from "next/link";
 import Image from "next/image";
 import mainImage from "../img/duck1.png";
 import subImage from "../img/duck2.png";
+import Head from "next/head";
+import useUser from "@libs/client/useUser";
 
 const Home: NextPage = () => {
+  const { user, isLoading } = useUser();
   return (
-    <Layout title="My Tutor" hasTabBar>
-      <div className="mt-6 w-full">
+    <Layout
+      title="My Tutor"
+      isLogged={typeof user !== typeof undefined}
+      hasTabBar
+    >
+      <Head>
+        <title>마이튜터 - 홈</title>
+      </Head>
+      <div className="w-full">
         <Image
           className="h-64 w-full"
           alt="메인 이미지"
           src={mainImage}
         ></Image>
       </div>
-      <div className="mt-10 flex flex-col items-center justify-center">
+      {/* <div className="mt-10 flex flex-col items-center justify-center">
         <span className="text-xl font-medium">
           1:1 과외 여기서 알아보고 성장하세요
         </span>
@@ -40,8 +50,8 @@ const Home: NextPage = () => {
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             />
           </svg>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
       <div className="mt-8 w-full px-4">
         <div className="flex items-baseline">
           <h1 className="font-xl font-semibold">여기서 지금 시작해보세요 !</h1>
@@ -83,15 +93,13 @@ const Home: NextPage = () => {
                   있습니다.
                 </p>
                 <h4 className="mt-6 text-2xl font-semibold text-red-500">
-                  700,000원
+                  월 700,000원
                 </h4>
               </div>
             </a>
           </Link>
         </div>
       </div>
-
-      <FloatingButton href="asd">sad</FloatingButton>
     </Layout>
   );
 };

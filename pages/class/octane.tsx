@@ -5,7 +5,7 @@ import mainImage from "../../img/c4d.png";
 
 function Octane() {
   return (
-    <Layout title="My Tutor">
+    <Layout title="My Tutor" canGoBack>
       <Image src={mainImage} alt="커리큘럼"></Image>
     </Layout>
   );

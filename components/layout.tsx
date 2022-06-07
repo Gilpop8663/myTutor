@@ -1,29 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { cls } from "@libs/client/utils";
 import { useRouter } from "next/router";
+import useMutation from "@libs/client/useMutation";
+import useUser from "@libs/client/useUser";
 
 interface LayoutProps {
   title?: string;
   large?: boolean;
+  canGoBack?: boolean;
   hasTabBar?: boolean;
+  isLogged?: boolean;
   children: React.ReactNode;
+}
+
+interface LogoutResult {
+  ok: boolean;
 }
 
 export default function Layout({
   title,
   hasTabBar,
+  canGoBack = false,
   large = false,
   children,
+  isLogged = false,
 }: LayoutProps) {
   const router = useRouter();
+  const [logout, { data, error }] =
+    useMutation<LogoutResult>("/api/users/logout");
   const [isOpen, setIsOpen] = useState(false);
   const onOpenClick = () => {
     setIsOpen((prev) => !prev);
   };
-  const onClick = () => {
+  const onLogoutClick = () => {
+    logout({});
+  };
+  const onBackClick = () => {
     router.back();
   };
+
+  useEffect(() => {
+    if (data?.ok) {
+      // router.replace("/");
+    }
+  }, [router]);
+
   return (
     <div className="">
       <div
@@ -32,21 +54,40 @@ export default function Layout({
           "fixed top-0 z-10 flex h-12 w-full max-w-2xl select-none items-center justify-center bg-white px-10  text-lg  font-medium text-gray-800  md:h-24"
         )}
       >
-        <svg
-          onClick={onOpenClick}
-          xmlns="http://www.w3.org/2000/svg"
-          className="absolute  left-4 h-6 w-6 cursor-pointer md:hidden"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg>
+        {canGoBack ? (
+          <button onClick={onBackClick} className="absolute left-4">
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              ></path>
+            </svg>
+          </button>
+        ) : (
+          <svg
+            onClick={onOpenClick}
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute  left-4 h-6 w-6 cursor-pointer md:hidden"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        )}
         {title ? (
           <Link href="/">
             <a
@@ -61,17 +102,35 @@ export default function Layout({
         ) : null}
       </div>
       <div className="w-66 fixed right-10 hidden h-24 max-w-2xl cursor-pointer select-none items-center justify-between text-base font-semibold md:flex">
-        <Link href="/profile">
-          <a className="mx-3 transition-colors hover:text-red-500">
-            마이페이지
-          </a>
-        </Link>
-        <Link href="/enter">
-          <a className="mx-3 transition-colors hover:text-red-500">로그인</a>
-        </Link>
-        <Link href="/create">
-          <a className="mx-3 transition-colors hover:text-red-500">회원가입</a>
-        </Link>
+        {isLogged && (
+          <>
+            <Link href="/profile">
+              <a className="mx-3 transition-colors hover:text-red-500">
+                마이페이지
+              </a>
+            </Link>
+            <div
+              onClick={onLogoutClick}
+              className="mx-3 transition-colors hover:text-red-500"
+            >
+              로그아웃
+            </div>
+          </>
+        )}
+        {!isLogged && (
+          <>
+            <Link href="/enter">
+              <a className="mx-3 transition-colors hover:text-red-500">
+                로그인
+              </a>
+            </Link>
+            <Link href="/create">
+              <a className="mx-3 transition-colors hover:text-red-500">
+                회원가입
+              </a>
+            </Link>
+          </>
+        )}
       </div>
       <div
         className={cls(
@@ -100,24 +159,45 @@ export default function Layout({
           </Link>
           <div></div>
         </div>
-        <div className="mt-16 grid select-none grid-cols-2 justify-center rounded-lg bg-gray-800 py-5 text-lg shadow-md">
-          <Link href="/enter">
-            <a className="flex cursor-pointer justify-center  border-r text-white transition-colors hover:text-red-300">
-              로그인
-            </a>
-          </Link>
-          <Link href="/create">
-            <a className="flex cursor-pointer justify-center  text-white transition-colors hover:text-red-300">
-              회원가입
-            </a>
-          </Link>
+        <div
+          className={cls(
+            isLogged
+              ? "flex items-center justify-center"
+              : " grid grid-cols-2 justify-center",
+            "mt-16 select-none  rounded-lg bg-gray-800 py-5 text-lg shadow-md"
+          )}
+        >
+          {!isLogged && (
+            <>
+              <Link href="/enter">
+                <a className="flex cursor-pointer justify-center  border-r text-white transition-colors hover:text-red-300">
+                  로그인
+                </a>
+              </Link>
+              <Link href="/create">
+                <a className="flex cursor-pointer justify-center  text-white transition-colors hover:text-red-300">
+                  회원가입
+                </a>
+              </Link>
+            </>
+          )}
+          {isLogged && (
+            <div
+              onClick={onLogoutClick}
+              className="flex cursor-pointer justify-center  text-white transition-colors hover:text-red-300"
+            >
+              로그아웃
+            </div>
+          )}
         </div>
 
-        <Link href="/profile">
-          <a className="mt-8 flex cursor-pointer justify-center border-t border-black/50 pt-8 text-lg font-semibold  text-black transition-colors hover:text-red-300">
-            마이 페이지
-          </a>
-        </Link>
+        {isLogged && (
+          <Link href="/profile">
+            <a className="mt-8 flex cursor-pointer justify-center border-t border-black/50 pt-8 text-lg font-semibold  text-black transition-colors hover:text-red-300">
+              마이 페이지
+            </a>
+          </Link>
+        )}
       </div>
       <div className={cls("pt-12 md:pt-24", hasTabBar ? "pb-24" : "")}>
         {children}

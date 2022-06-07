@@ -24,12 +24,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(200).end();
   }
 
+  //   console.log(exist);
+
   if (!exist) {
     // DB에 회원 번호가 없을 경우
     const message = await twilioClient.messages.create({
       messagingServiceSid: process.env.TWILIO_MSID,
       to: "82" + phone,
-      body: `[마이튜터] 인증번호[${payload}]를 입력해주세요.`,
+      body: `[Web발신][마이튜터] 인증번호[${payload}]를 입력해주세요.`,
     });
 
     const token = await client.tutorToken.create({
@@ -49,4 +51,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   return res.status(200).end();
 }
 
-export default withHandler("POST", handler);
+export default withHandler({
+  method: "POST",
+  handler,
+  isPrivate: false,
+});

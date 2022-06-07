@@ -1,16 +1,29 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import Layout from "@components/layout";
+import useUser from "@libs/client/useUser";
+import useMutation from "@libs/client/useMutation";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Profile: NextPage = () => {
+  const { user, isLoading } = useUser();
+  const router = useRouter();
+  const [isLogged, { data, error }] = useMutation("/api/profiles/index");
+  console.log(user);
+  useEffect(() => {
+    // if (!data?.ok) {
+    //   router.replace("/");
+    // }
+  }, [data]);
   return (
-    <Layout title="My Tutor">
+    <Layout title="My Tutor" hasTabBar>
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
           <div className="h-16 w-16 rounded-full bg-slate-500" />
           <div className="flex flex-col">
             <span className="mb-2 text-lg font-medium  text-gray-900">
-              김영길
+              {user?.nickname}
             </span>
             <Link href="/profile/edit">
               <a className="text-xs text-gray-400">프로필 수정하기 &rarr;</a>

@@ -6,7 +6,7 @@ import "react-calendar/dist/Calendar.css";
 function Schedule() {
   const [value, onChange] = useState(new Date());
   return (
-    <Layout title="수업 일정">
+    <Layout title="수업 일정" canGoBack>
       <div className="mt-16 flex w-full justify-center">
         <Calendar onChange={onChange} value={value} calendarType="Arabic" />
       </div>

@@ -8,6 +8,8 @@ import { cls } from "@libs/client/utils";
 import Layout from "@components/layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Head from "next/head";
+import ErrorMessage from "@components/error";
 
 interface EnterForm {
   email?: string;
@@ -28,7 +30,12 @@ const Enter: NextPage = () => {
     if (loading) return;
     enter(value);
   };
-  const { register, handleSubmit, reset } = useForm<EnterForm>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<EnterForm>();
 
   useEffect(() => {
     if (data?.ok) {
@@ -38,12 +45,15 @@ const Enter: NextPage = () => {
 
   return (
     <Layout title="My Tutor">
+      <Head>
+        <title>마이튜터 - 로그인</title>
+      </Head>
       <div className="mt-16 px-4">
         <h3 className="text-center text-xl font-bold">My Tutor에 로그인하기</h3>
         <div className="mt-12">
           <form className="flex flex-col" onSubmit={handleSubmit(onValid)}>
             <input
-              className="my-3 flex justify-center rounded-md border-gray-500 py-4 placeholder:text-center placeholder:text-lg placeholder:font-semibold placeholder:text-black"
+              className="my-3 flex justify-center rounded-md border-gray-500 py-4 placeholder:text-center placeholder:text-lg placeholder:font-semibold placeholder:text-black focus:border-gray-500  focus:ring-0"
               type="email"
               required={true}
               placeholder="이메일 주소를 입력해주세요"
@@ -55,9 +65,12 @@ const Enter: NextPage = () => {
                 },
               })}
             />
+            {errors.email && (
+              <ErrorMessage>{errors.email.message}</ErrorMessage>
+            )}
             <input
               type="password"
-              className="my-3 flex justify-center rounded-md border-gray-500 py-4 placeholder:text-center placeholder:text-lg placeholder:font-semibold placeholder:text-black"
+              className="my-3 flex justify-center rounded-md border-gray-500 py-4 placeholder:text-center placeholder:text-lg placeholder:font-semibold placeholder:text-black focus:border-gray-500  focus:ring-0"
               required={true}
               placeholder="비밀번호를 입력해주세요"
               {...register("password", {
@@ -68,7 +81,17 @@ const Enter: NextPage = () => {
                 },
               })}
             />
-            <button></button>
+            {errors.password && (
+              <ErrorMessage>{errors.password.message}</ErrorMessage>
+            )}
+            {!data?.ok && (
+              <ErrorMessage visible={typeof data?.message === typeof "s"}>
+                <span>{data?.message}</span>
+              </ErrorMessage>
+            )}
+            <button className="my-3 flex w-1/2 justify-center  self-center rounded-md border border-gray-500 py-4 text-center text-lg font-semibold transition hover:bg-blue-200">
+              로그인
+            </button>
           </form>
         </div>
         {/* <div className="mt-12 flex w-full items-center justify-center">

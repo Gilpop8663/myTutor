@@ -4,9 +4,9 @@ import Layout from "@components/layout";
 
 const Loved: NextPage = () => {
   return (
-    <Layout title="관심있는 수업">
-      <div>
-        <div className="flex px-4 py-4">
+    <Layout title="관심있는 수업" canGoBack>
+      {/* <div> */}
+      {/* <div className="flex px-4 py-4">
           <div className="h-28 w-28 rounded-lg bg-red-500 shadow-sm"></div>
           <div className="ml-4 flex flex-col font-medium">
             <h3 className="mb-8 text-base">김다애 모션디자이너</h3>
@@ -18,7 +18,7 @@ const Loved: NextPage = () => {
         <div className="flex cursor-pointer items-center justify-center border-t border-b py-3 text-xs font-medium">
           커리큘럼 보러가기
         </div>
-      </div>
+      </div> */}
     </Layout>
   );
 };

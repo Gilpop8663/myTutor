@@ -5,7 +5,7 @@ import Layout from "@components/layout";
 
 const EditProfile: NextPage = () => {
   return (
-    <Layout title="My Tutor">
+    <Layout title="My Tutor" canGoBack>
       <form className="space-y-4 py-10 px-4">
         <div className="flex items-center space-x-3">
           <div className="h-14 w-14 rounded-full bg-slate-500" />
