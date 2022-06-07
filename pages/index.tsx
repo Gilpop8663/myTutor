@@ -2,11 +2,20 @@ import type { NextPage } from "next";
 import FloatingButton from "@components/floating-button";
 import Layout from "@components/layout";
 import Link from "next/link";
+import Image from "next/image";
+import mainImage from "../img/duck1.png";
+import subImage from "../img/duck2.png";
 
 const Home: NextPage = () => {
   return (
     <Layout title="My Tutor" hasTabBar>
-      <div className="h-64 w-full bg-slate-800"></div>
+      <div className="mt-6 w-full">
+        <Image
+          className="h-64 w-full"
+          alt="메인 이미지"
+          src={mainImage}
+        ></Image>
+      </div>
       <div className="mt-10 flex flex-col items-center justify-center">
         <span className="text-xl font-medium">
           1:1 과외 여기서 알아보고 성장하세요
@@ -14,7 +23,7 @@ const Home: NextPage = () => {
         <div className="relative mt-5 flex w-full items-center px-4">
           <input
             type="text"
-            className="h-12 w-full rounded-full border-0 bg-[#FFA1A1] p-2 pl-6 text-sm text-black/80 shadow-md placeholder:text-sm placeholder:font-semibold placeholder:text-black/40 focus:border-0"
+            className="h-12 w-full rounded-full border-0 bg-[#FFA1A1] p-2 pl-6 text-sm text-black/80 shadow-md placeholder:text-sm placeholder:font-semibold placeholder:text-black/40 focus:border-0 focus:ring-0"
             placeholder="배우고 싶은 지식을 입력해보세요."
           />
           <svg
@@ -44,9 +53,15 @@ const Home: NextPage = () => {
           현업자로만 이루어진 검증된 친절한 과외 선생님 !!
         </span>
         <div className="mt-8 cursor-pointer">
-          <Link href="www.naver.com">
+          <Link href="/class/octane">
             <a>
-              <div className="h-80 w-full rounded-2xl bg-red-300 shadow-md"></div>
+              <div className="w-full rounded-2xl pb-6 ">
+                <Image
+                  alt="서브이미지"
+                  className="w-full rounded-2xl"
+                  src={subImage}
+                ></Image>
+              </div>
               <div className="mt-4 flex">
                 <div className="mr-3 flex items-center justify-center rounded-full bg-red-300 py-1 px-2 text-sm font-medium">
                   C4D

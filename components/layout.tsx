@@ -29,7 +29,7 @@ export default function Layout({
       <div
         className={cls(
           large ? "" : "border-b",
-          "fixed top-0 flex h-12 w-full max-w-2xl select-none items-center justify-center bg-white px-10  text-lg  font-medium text-gray-800  md:h-24"
+          "fixed top-0 z-10 flex h-12 w-full max-w-2xl select-none items-center justify-center bg-white px-10  text-lg  font-medium text-gray-800  md:h-24"
         )}
       >
         <svg
