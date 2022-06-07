@@ -77,20 +77,19 @@ const Home: NextPage = () => {
                   C4D
                 </div>
                 <div className="mr-3 flex  items-center justify-center rounded-full bg-red-300 py-1 px-2 text-sm font-medium">
-                  에프터 이펙트
+                  옥테인
                 </div>
                 <div className="mr-3 flex  items-center justify-center rounded-full bg-red-300 py-1 px-2 text-sm font-medium">
-                  옥테인
+                  8주동안
                 </div>
               </div>
               <div className="mt-6 flex  flex-col">
                 <span className="text-2xl font-medium">
-                  그래픽 디자이너 김다애
+                  시작을 위한 ONE STEP C4D
                 </span>
                 <p className="mt-4 text-sm font-medium">
-                  에프터 이펙트의 기초과정부터 고급과정까지, 실무 및 자기만의
-                  영상제작부터 편집까지 맞춤 과외방식으로 쉽고 빠르게 배우실 수
-                  있습니다.
+                  C4D와 OCTANE을 동시에 사용해보고 습득 할 수 있는 수업입니다.
+                  C4D의 첫 걸음을 시작을 위한 ONE STEP C4D로 시작하세요!
                 </p>
                 <h4 className="mt-6 text-2xl font-semibold text-red-500">
                   월 700,000원
