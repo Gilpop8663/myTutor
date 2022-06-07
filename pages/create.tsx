@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import Link from "next/link";
@@ -87,10 +87,12 @@ function Create() {
     nameCheck({ nickname: currentName });
   };
 
-  if (data?.ok) {
-    // 회원가입이 정상적으로 되었다면 홈으로 이동
-    router.push("/");
-  }
+  useEffect(() => {
+    if (data?.ok) {
+      // 회원가입이 정상적으로 되었다면 홈으로 이동
+      router.push("/");
+    }
+  }, [data, router]);
 
   return (
     <Layout title="My Tutor">

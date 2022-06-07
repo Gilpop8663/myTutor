@@ -1,4 +1,3 @@
-import twilio from "twilio";
 import bcrypt from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
@@ -12,7 +11,7 @@ async function handler(
 ) {
   const { nickname, phone, email, password, avatar, token } = req.body;
 
-  const exists = await client.tutorToken.findFirst({
+  const foundToken = await client.tutorToken.findFirst({
     // 인증번호 토큰 확인
     where: {
       phone,
@@ -20,7 +19,7 @@ async function handler(
     },
   });
 
-  if (!exists) {
+  if (!foundToken) {
     res.json({
       ok: false,
       message: "인증번호가 잘못되었습니다",
@@ -44,6 +43,12 @@ async function handler(
   });
 
   console.log(user);
+
+  await client.tutorToken.delete({
+    where: {
+      phone: phone,
+    },
+  });
 
   res.json({
     ok: true,
