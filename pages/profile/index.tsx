@@ -5,29 +5,43 @@ import useUser from "@libs/client/useUser";
 import useMutation from "@libs/client/useMutation";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import firstAvatar from "../../img/first.jpg";
+import secondAvatar from "../../img/second.jpg";
+import thirdAvatar from "../../img/third.jpg";
+import Image from "next/image";
 
 const Profile: NextPage = () => {
   const { user, isLoading } = useUser();
   const router = useRouter();
   const [isLogged, { data, error }] = useMutation("/api/profiles/index");
-  console.log(user);
-  useEffect(() => {
-    // if (!data?.ok) {
-    //   router.replace("/");
-    // }
-  }, [data]);
+
+  const userAvatar =
+    user?.avatar === "first"
+      ? firstAvatar
+      : user?.avatar === "second"
+      ? secondAvatar
+      : thirdAvatar;
+
   return (
     <Layout title="My Tutor" hasTabBar>
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
-          <div className="h-16 w-16 rounded-full bg-slate-500" />
+          <div className="h-16 w-16 rounded-full bg-slate-500">
+            <Image
+              src={userAvatar}
+              alt="유저 아바타"
+              height={160}
+              width={160}
+              className="rounded-full"
+            ></Image>
+          </div>
           <div className="flex flex-col">
             <span className="mb-2 text-lg font-medium  text-gray-900">
               {user?.nickname}
             </span>
-            <Link href="/profile/edit">
+            {/* <Link href="/profile/edit">
               <a className="text-xs text-gray-400">프로필 수정하기 &rarr;</a>
-            </Link>
+            </Link> */}
           </div>
         </div>
         <div className="mt-16 flex justify-around">
@@ -121,7 +135,7 @@ const Profile: NextPage = () => {
           <span className="ml-4 text-sm font-medium">공지사항</span>
         </a>
       </Link>
-      <div className="flex items-center border-t border-black/50 px-4 py-3">
+      {/* <div className="flex items-center border-t border-black/50 px-4 py-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"
@@ -137,7 +151,7 @@ const Profile: NextPage = () => {
           />
         </svg>
         <span className="ml-4 text-sm font-medium">로그아웃</span>
-      </div>
+      </div> */}
     </Layout>
   );
 };
