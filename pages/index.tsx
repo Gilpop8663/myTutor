@@ -7,15 +7,22 @@ import mainImage from "../img/duck1.png";
 import subImage from "../img/duck2.png";
 import Head from "next/head";
 import useUser from "@libs/client/useUser";
+import ClassItem from "@components/classItem";
+import { TutorClass } from "@prisma/client";
+import useSWR from "swr";
+
+interface ClassResponse {
+  ok: boolean;
+  tutorClasses: TutorClass[];
+}
 
 const Home: NextPage = () => {
   const { user, isLoading } = useUser();
+
+  const { data } = useSWR<ClassResponse>("api/classes");
+
   return (
-    <Layout
-      title="My Tutor"
-      isLogged={typeof user !== typeof undefined}
-      hasTabBar
-    >
+    <Layout title="My Tutor" hasTabBar>
       <Head>
         <title>마이튜터 - 홈</title>
       </Head>
@@ -97,6 +104,20 @@ const Home: NextPage = () => {
               </div>
             </a>
           </Link>
+          {data?.tutorClasses?.map((item) => (
+            <ClassItem
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              summary={item.summary}
+              tag1={item.tag1}
+              tag2={item.tag2}
+              tag3={item.tag3}
+              src={item.image}
+              alt={item.image}
+              price={item.price}
+            />
+          ))}
         </div>
       </div>
     </Layout>

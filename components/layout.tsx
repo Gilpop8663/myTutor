@@ -10,7 +10,6 @@ interface LayoutProps {
   large?: boolean;
   canGoBack?: boolean;
   hasTabBar?: boolean;
-  isLogged?: boolean;
   children: React.ReactNode;
 }
 
@@ -24,9 +23,9 @@ export default function Layout({
   canGoBack = false,
   large = false,
   children,
-  isLogged = false,
 }: LayoutProps) {
   const router = useRouter();
+  const { user, isLoading } = useUser();
   const [logout, { data, error }] =
     useMutation<LogoutResult>("/api/users/logout");
   const [isOpen, setIsOpen] = useState(false);
@@ -40,11 +39,7 @@ export default function Layout({
     router.back();
   };
 
-  useEffect(() => {
-    if (data?.ok) {
-      // router.replace("/");
-    }
-  }, [router]);
+  const isLogged = typeof user !== typeof undefined;
 
   return (
     <div className="">

@@ -30,4 +30,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   return res.status(200).end();
 }
 
-export default withHandler({ method: "POST", handler, isPrivate: false });
+export default withHandler({ methods: ["POST"], handler, isPrivate: false });

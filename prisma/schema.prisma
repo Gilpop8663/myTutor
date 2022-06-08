@@ -20,6 +20,7 @@ model User {
   avatar    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  
 }
 
 model TutorUser {
@@ -31,6 +32,7 @@ model TutorUser {
   avatar    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  classes TutorClass[]
 }
 
 model TutorToken {
@@ -39,4 +41,20 @@ model TutorToken {
   phone String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model TutorClass{
+  id        Int      @id @default(autoincrement())
+  user TutorUser @relation(fields: [userId],references: [id],onDelete: Cascade)
+  userId Int
+  image String
+  name String
+  price Int
+  tag1 String
+  tag2 String
+  tag3 String
+  summary String @db.MediumText
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
 }
